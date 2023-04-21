@@ -7,7 +7,8 @@ class StringServerAdder implements URLHandler {
     public String handleRequest(URI url) {
         if (url.getPath().equals("/")) {
             return stringsOnSite;
-        } else {
+        } 
+        else {
             //System.out.println("Path: " + url.getPath());
             if (url.getPath().contains("/add-message")) {
                 String[] parameters = url.getQuery().split("=");
@@ -15,7 +16,7 @@ class StringServerAdder implements URLHandler {
                     return stringsOnSite += parameters[1] + "\n";
                 }
             }
-            return "404 Not Found! What the heck???";
+            return "404 What the heck???";
         }
     }
 }
