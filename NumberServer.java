@@ -1,35 +1,30 @@
 import java.io.IOException;
 import java.net.URI;
 
-class Handler implements URLHandler {
-    // The one bit of state on the server: a number that will be manipulated by
-    // various requests.
-    int num = 0;
+class StringServerAdder implements URLHandler {
+    String stringsOnSite = "";
 
     public String handleRequest(URI url) {
         if (url.getPath().equals("/")) {
-            return String.format("Roman's Number: %d", num);
-        } else if (url.getPath().equals("/increment")) {
-            num += 1;
-            return String.format("Number incremented!");
-        } else {
-            System.out.println("Path: " + url.getPath());
-            if (url.getPath().contains("/add")) {
+            return stringsOnSite;
+        } 
+        else {
+            //System.out.println("Path: " + url.getPath());
+            if (url.getPath().contains("/add-message")) {
                 String[] parameters = url.getQuery().split("=");
-                if (parameters[0].equals("count")) {
-                    num += Integer.parseInt(parameters[1]);
-                    return String.format("Number increased by %s! It's now %d", parameters[1], num);
+                if (parameters[0].equals("string")) {
+                    return stringsOnSite += parameters[1] + "\n";
                 }
             }
-            return "404 Not Found! 123412341234";
+            return "404 What the heck???";
         }
     }
 }
 
-class NumberServer {
+class StringServer {
     public static void main(String[] args) throws IOException {
         if(args.length == 0){
-            System.out.println("Missing port number! Try any number between 1024 to 49151");
+            System.out.println("Must put port number");
             return;
         }
 
